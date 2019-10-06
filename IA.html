@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <script src='https://unpkg.com/brain.js@2.0.0-alpha.9/dist/brain-browser.min.js'>
+        </script>
+    </head>
+    <body>
+        <h1>
+            Boton:
+            <textarea id="nuevo">
+            </textarea>
+        </h1>
+        <button onclick="add()"> Agregar </button>
+        <h1>
+            Resultado
+        </h1>
+        <div id='salida'>
+            xxxx
+        </div>
+        <div id="olo">
+        </div>
+        <div id="oloo">
+        </div>
+        <script>
+            /* Red */
+            var net = new brain.recurrent.LSTMTimeStep();
+            var ar = new Array(); //arreglo al que se le agregan entradas
+            var op = new Array(); //arreglo al que se le agregan resultados
+            ar = [1,2,3];
+            op = [1,2,3];
+            /* Entrenamiento */ /*entrena y añade resultado*/
+            function search()
+            {
+                net.train( [getStock(),getStock(),getStock()]);
+                /* Predicción */
+                var result=net.run( op );
+                const count = op.push(result);
+                console.log(count);
+                document.getElementById( "salida" ).innerHTML=result;
+            }
+            /*funion que añade un nuevo arreglo*/
+            function add()
+            {
+                var o = document.getElementById("nuevo").value;
+                const count = ar.push(o);
+                console.log(count);
+                document.getElementById( "olo" ).innerHTML=ar;
+                document.getElementById( "oloo" ).innerHTML=op;
+                search();
+            }
+            
+            function getStock()
+            {
+                return([parseInt(ar)]);
+            }
+        </script>
+    </body>
+</html>
